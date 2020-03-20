@@ -16,20 +16,20 @@ English names. He also asks you to create a method that will convert his English
 emoticons, like `:)`, into their Japanese equivalents so that he can look cool
 in texts to his new friends.
 
-We have a emoticon dictionary of sorts, `lib/emoticons.yml`, but it a _YAML_
+We have an emoticon dictionary of sorts, `lib/emoticons.yml`, but it a _YAML_
 file, something we haven't seen before. As humans, we can read this file, but
-the contents are not in a format that we're used to working with in Ruby.
+the contents are not in a format that we're used to working within Ruby.
 
-Before we can built out our friend's methods, we will need to create a helper
+Before we can build out our friend's methods, we will need to create a helper
 method that reads `lib/emoticons.yml` and organizes the data it contains into a
-nested data struture. With a nested data structure, we can use Enumerables to
+nested data structure. With a nested data structure, we can use Enumerables to
 help translate emoticons.
 
 ## Instructions
 
 1. Write a method, `load_library`, that loads the `emoticons.yml` file. This
    method should return a hash where each key is the name of an emoticon. Each
-   emoticon name s hould point to a _nested_ hash containing two keys,
+   emoticon name should point to a _nested_ hash containing two keys,
    `:english` and `:japanese`. These keys will point to English and Japanese
    versions of the emoticon. If `lib/emoticons.yml` had just one translation:
 
@@ -114,7 +114,7 @@ For instance, take this fruit YAML file:
 - Mango
 ```
 
-When Ruby loads the the YAML file above, the list of fruits would become an
+When Ruby loads the YAML file above, the list of fruits would become an
 array:
 
 ```ruby
@@ -137,7 +137,7 @@ secretary of state: John Kerry
 secretary of the treasury: Jacob Lew
 ```
 
-When Ruby loads the the YAML file above, the list of position titles and names
+When Ruby loads the YAML file above, the list of position titles and names
 would become a hash of keys and values:
 
 ```ruby
