@@ -2,8 +2,8 @@
 
 ## Learning Goals
 
-- Convert data from a file into Ruby collections
-- Restructure array and hash data
+- Convert data from a file into usable Ruby data structure
+- Traverse Hash data to find specific values
 
 ## Background
 
@@ -11,38 +11,88 @@ Your friend JJ just moved to Japan and loves it. However, sometimes he gets
 confused because his new friends text him emoticons that he doesn't recognize,
 like `＼(◎o◎)／!` and `((d[-_-]b))`.
 
-He asked you to create a method that will translate these emoticons to English.
-He also asked you to create a method that will convert his English emoticons,
-like `:)`, into their Japanese equivalents so that he can look cool in texts to
-his new friends.
+He asks you to create a method that will translate these emoticons to their
+English names. He also asks you to create a method that will convert his English
+emoticons, like `:)`, into their Japanese equivalents so that he can look cool
+in texts to his new friends.
+
+We have a emoticon dictionary of sorts, `lib/emoticons.yml`, but it a _YAML_
+file, something we haven't seen before. As humans, we can read this file, but
+the contents are not in a format that we're used to working with in Ruby.
+
+Before we can built out our friend's methods, we will need to create a helper
+method that reads `lib/emoticons.yml` and organizes the data it contains into a
+nested data struture. With a nested data structure, we can use Enumerables to
+help translate emoticons.
 
 ## Instructions
 
-1. Write a method, `load_library`, that loads the `emoticons.yml` file.
+1. Write a method, `load_library`, that loads the `emoticons.yml` file. This
+   method should return a hash where each key is the name of an emoticon. Each
+   emoticon name s hould point to a _nested_ hash containing two keys,
+   `:english` and `:japanese`. These keys will point to English and Japanese
+   versions of the emoticon. If `lib/emoticons.yml` had just one translation:
 
-2. Write a method, `get_japanese_emoticon`, that will take a traditional Western
-   emoticon, like `:)` and translate it to its Japanese version. It will rely
-   `load_library` to work. Refer to the table below for translations.
+   ```text
+   happy:
+     - ":)"
+     - "(＾ｖ＾)"
+   ```
 
-3. Write a method, `get_english_meaning`, that takes a Japanese emoticon and
-   returns its meaning in English. This method will also rely on `load_library` to
+   `load_library` would be expected to return the following data structure:
+
+   ```rb
+   {
+      'happy' => {
+         :english => ":)",
+         :japanese => "(＾ｖ＾)"
+      }
+   }
+   ```
+
+   For reference, here is the full list of emoticons stored in `lib/emoticons.yml`
+
+   | Meaning    | English |   Japanese    |
+   | ---------- | :-----: | :-----------: |
+   | angel      |   O:)   |    ☜(⌒▽⌒)☞    |
+   | angry      |   >:(   | ヽ(ｏ`皿′ｏ)ﾉ |
+   | bored      |   :O    |    (ΘεΘ;)     |
+   | confused   |   %)    |    (゜.゜)    |
+   | embarrassed |   :$    |    (#^.^#)    |
+   | fish       |   ><>   |   >゜))))彡   |
+   | glasses    |   8D    |    (^0_0^)    |
+   | grinning    |   =D    |  （￣ー￣）   |
+   | happy      |   :)    |  （＾ｖ＾）   |
+   | kiss       |   :\*   |  (\*^3^)/~☆   |
+   | sad        |   :'(   |    (Ｔ▽Ｔ)    |
+   | surprised  |   :o    |      o_O      |
+   | wink       |   ;)    |    (^\_-)     |
+
+2. Write a method, `get_english_meaning`, that takes a Japanese emoticon and
+   returns its name in English. This method will rely on `load_library` to
    first load the YAML file.
 
-| Meaning    | English |   Japanese    |
-| ---------- | :-----: | :-----------: |
-| angel      |   O:)   |    ☜(⌒▽⌒)☞    |
-| angry      |   >:(   | ヽ(ｏ`皿′ｏ)ﾉ |
-| bored      |   :O    |    (ΘεΘ;)     |
-| confused   |   %)    |    (゜.゜)    |
-| embarrassed |   :$    |    (#^.^#)    |
-| fish       |   ><>   |   >゜))))彡   |
-| glasses    |   8D    |    (^0_0^)    |
-| grinning    |   =D    |  （￣ー￣）   |
-| happy      |   :)    |  （＾ｖ＾）   |
-| kiss       |   :\*   |  (\*^3^)/~☆   |
-| sad        |   :'(   |   (Ｔ ▽ Ｔ)   |
-| surprised  |   :o    |      o_O      |
-| wink       |   ;)    |    (^\_-)     |
+   Example usage:
+
+   ```rb
+   get_english_meaning("./lib/emoticons.yml", "(Ｔ▽Ｔ)")
+    # => "sad"
+   get_english_meaning("./lib/emoticons.yml", "☜(⌒▽⌒)☞")
+    # => "angel"
+   ```
+
+3. Write a method, `get_japanese_emoticon`, that will take a traditional Western
+   emoticon (i.g. `:)`) and translate it to its Japanese version (`(＾ｖ＾)`). It will also rely
+   `load_library` to first load the YAML file.
+
+   Example usage:
+
+   ```rb
+   get_japanese_emoticon("./lib/emoticons.yml", ":)")
+    # => "(＾ｖ＾)"
+   get_japanese_emoticon("./lib/emoticons.yml", ":o")
+    # => "o_O"
+   ```
 
 ## What is YAML?
 
@@ -104,6 +154,31 @@ gov
 # }
 ```
 
+This is the case in `lib/emoticons.yml`. If you convert the file, Ruby will
+produce a structure like this:
+
+```rb
+{
+   "angel" => [ "O:)", "☜(⌒▽⌒)☞" ],
+   "angry" => [ ">:(", "ヽ(ｏ`皿′ｏ)ﾉ" ],
+   "bored" => [ ":O", "(ΘεΘ;)" ],
+   "confused" => [ "%)", "(゜.゜)" ],
+   "embarrassed" => [ ":$", "(#^.^#)" ],
+   "fish" => [ "><>", ">゜))))彡" ],
+   "glasses" => [ "8D", "(^0_0^)" ],
+   "grinning" => [ "=D", "(￣ー￣)" ],
+   "happy" => [ ":)", "(＾ｖ＾)" ],
+   "kiss" => [ ":*", "(*^3^)/~☆" ],
+   "sad" => [ ":'(", "(Ｔ▽Ｔ)" ],
+   "surprised" => [ ":o", "o_O" ],
+   "wink" => [ ";)", "(^_-)" ]
+}
+```
+
+This is _close_ to what we want from the `load_library` method, but work will
+still need to be done to organize the emoticons into hashes with `:english` and
+`:japanese` key/value pairs.
+
 ### Final Words about YAML
 
 A YAML file has an extension of `.yml`. For more info about YAML syntax, see
@@ -122,18 +197,20 @@ instance, if we were to open IRB and declare a hash using the hash-rocket, the
 resulting key remains a String:
 
 ```ruby
-hash = {"get_emoticon" => {}}
-hash #=> {"get_emoticon"=>{}}
+hash = {"angel" => {}}
+hash #=> {"angel"=>{}}
 ```
 
 However, if the alternate syntax is used, the key will be converted:
 
 ```ruby
-hash = {"get_emoticon": {}}
-hash #=> {:get_emoticon=>{}}
+hash = {"angel": {}}
+hash #=> {:angel=>{}}
 ```
 
-Keep this in mind as you work on this lab. The tests will accept either, but you will need to be consistent in your own code when referencing hash keys. YAML will not convert the emoticons to symbols when reading `emoticons.yml`.
+Keep this in mind as you work on this lab. The tests will accept either, but you
+will need to be consistent in your own code when referencing hash keys. YAML
+will not convert the emoticons to symbols when reading `emoticons.yml`.
 
 ## Resources
 
