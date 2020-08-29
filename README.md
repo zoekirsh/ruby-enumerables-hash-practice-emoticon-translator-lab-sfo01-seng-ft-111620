@@ -82,7 +82,7 @@ help translate emoticons.
    ```
 
 3. Write a method, `get_japanese_emoticon`, that will take a traditional Western
-   emoticon (i.g. `:)`) and translate it to its Japanese version (`(＾ｖ＾)`). It will also rely
+   emoticon (e.g. `:)`) and translate it to its Japanese version (`(＾ｖ＾)`). It will also rely
    `load_library` to first load the YAML file.
 
    Example usage:
