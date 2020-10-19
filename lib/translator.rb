@@ -27,6 +27,6 @@ def get_japanese_emoticon(path, emoticon)
       return value[:japanese]
     end
   end
-  return "Sorrym, that emoticon was not found"
+  return "Sorry, that emoticon was not found"
 end
 
