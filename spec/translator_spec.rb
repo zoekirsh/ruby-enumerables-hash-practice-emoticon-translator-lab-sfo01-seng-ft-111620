@@ -99,7 +99,7 @@ describe "#get_english_meaning" do
     emoticon_hash = load_library("./lib/emoticons.yml")
 
     file_path = "./lib/emoticons.yml"
-    expect(self).to receive(:load_library).with(file_path).and_return(emoticon_hash)
+    expect(self).to receive(load_library).with(file_path).and_return(emoticon_hash)
     answer = get_english_meaning("./lib/emoticons.yml", "=D")
   end
 
