@@ -14,7 +14,11 @@ end
 
 def get_english_meaning(path, emoticon)
   # look up the inner value and return the outer key 
-  load_library(path)
+  load_library(path).each do |key, value|
+    if key[value][:japanese] == emoticon
+      p key[value]
+    end
+  end 
 end
 
 def get_japanese_emoticon(path, emoticon)
