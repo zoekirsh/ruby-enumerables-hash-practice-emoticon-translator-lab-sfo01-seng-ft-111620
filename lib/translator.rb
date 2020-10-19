@@ -12,7 +12,7 @@ def load_library(path)
   emoji_library
 end
 
-def get_english_meaning(path, string)
+def get_english_meaning(path, emoticon)
   # look up the inner value and return the outer key 
   load_library(path)
 end
