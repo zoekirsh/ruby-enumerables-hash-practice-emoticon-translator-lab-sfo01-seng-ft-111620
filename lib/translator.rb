@@ -13,11 +13,11 @@ def load_library(path)
 end
 
 
-def get_japanese_emoticon(hash, string)
+def get_japanese_emoticon(path, string)
   # look up inner value and return other inner value 
   
 end
 
-def get_english_meaning(hash, string)
+def get_english_meaning(path, string)
   # look up the inner value and return the outer key 
 end
