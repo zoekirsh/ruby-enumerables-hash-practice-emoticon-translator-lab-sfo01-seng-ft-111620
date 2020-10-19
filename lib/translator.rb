@@ -18,6 +18,7 @@ def get_english_meaning(path, emoticon)
     if value[:japanese] == emoticon
       return key
     end 
+    if !load_library(path).find 
   end 
 end
 
