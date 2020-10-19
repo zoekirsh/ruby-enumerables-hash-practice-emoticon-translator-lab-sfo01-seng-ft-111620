@@ -14,7 +14,6 @@ end
 
 
 def get_japanese_emoticon(path, string)
-  # look up inner value and return other inner value 
   load_library(path)
   
 end
